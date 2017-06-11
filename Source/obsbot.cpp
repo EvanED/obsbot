@@ -5,7 +5,7 @@
 #include "util/fixed_circular_buffer.hpp"
 #include "util/enumerate.hpp"
 #include "ui/ui.hpp"
-#include "bitmaps.hpp"
+#include "ui/bitmaps.hpp"
 
 //#include "P:\programs\bwapi-master\bwapi\BWAPI\Source\BWAPI\UnitImpl.h"
 

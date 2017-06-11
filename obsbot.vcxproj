@@ -95,15 +95,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\bitmaps.cpp" />
     <ClCompile Include="Source\Dll.cpp" />
     <ClCompile Include="Source\obsbot.cpp" />
+    <ClCompile Include="Source\ui\bitmaps.cpp" />
     <ClCompile Include="Source\ui\unit_ui.cpp" />
     <ClCompile Include="Source\util\mouse.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\bitmaps.hpp" />
     <ClInclude Include="Source\obsbot.hpp" />
+    <ClInclude Include="Source\ui\bitmaps.hpp" />
     <ClInclude Include="Source\ui\ui.hpp" />
     <ClInclude Include="Source\util\enumerate.hpp" />
     <ClInclude Include="Source\util\fixed_circular_buffer.hpp" />

@@ -2,7 +2,7 @@
 
 #include <utility>
 #include "bitmaps.hpp"
-#include "util/enumerate.hpp"
+#include "../util/enumerate.hpp"
 
 using BWAPI::Color;
 
