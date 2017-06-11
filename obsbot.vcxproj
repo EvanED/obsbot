@@ -98,6 +98,7 @@
     <ClCompile Include="Source\bitmaps.cpp" />
     <ClCompile Include="Source\Dll.cpp" />
     <ClCompile Include="Source\obsbot.cpp" />
+    <ClCompile Include="Source\util\mouse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\bitmaps.hpp" />

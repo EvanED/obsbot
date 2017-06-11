@@ -8,17 +8,11 @@
 
 //#include "P:\programs\bwapi-master\bwapi\BWAPI\Source\BWAPI\UnitImpl.h"
 
-#ifndef NOMINMAX
-#  define NOMINMAX
-#endif
-#include <Windows.h>
-#include <WinUser.h>
+#define SCREEN_WIDTH 640
+#define SCREEN_HEIGHT 480
 
 using namespace BWAPI;
 using namespace Filter;
-
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
 
 UnitType const army_types[] = {
 	UnitTypes::Terran_Marine,
@@ -61,55 +55,6 @@ UnitType const army_types[] = {
 	UnitTypes::Protoss_Reaver,
 	UnitTypes::Protoss_Observer,
 };
-
-void MouseSetup(INPUT *buffer)
-{
-	buffer->type = INPUT_MOUSE;
-	buffer->mi.dx = (0 * (0xFFFF / SCREEN_WIDTH));
-	buffer->mi.dy = (0 * (0xFFFF / SCREEN_HEIGHT));
-	buffer->mi.mouseData = 0;
-	buffer->mi.dwFlags = MOUSEEVENTF_ABSOLUTE;
-	buffer->mi.time = 0;
-	buffer->mi.dwExtraInfo = 0;
-}
-
-void MouseMoveAbsolute(INPUT *buffer, int x, int y)
-{
-	buffer->mi.dx = long(x * (double(0xFFFF) / SCREEN_WIDTH));
-	buffer->mi.dy = long(y * (double(0xFFFF) / SCREEN_HEIGHT));
-	buffer->mi.dwFlags = (MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE);
-
-SendInput(1, buffer, sizeof(INPUT));
-}
-
-struct EnumWindowsCallbackArgs {
-	EnumWindowsCallbackArgs(DWORD p) : pid(p) { }
-	const DWORD pid;
-	std::vector<HWND> handles;
-};
-
-static BOOL __stdcall EnumWindowsCallback(HWND hnd, LPARAM lParam)
-{
-	EnumWindowsCallbackArgs *args = (EnumWindowsCallbackArgs *)lParam;
-
-	DWORD windowPID;
-	(void)::GetWindowThreadProcessId(hnd, &windowPID);
-	if (windowPID == args->pid) {
-		args->handles.push_back(hnd);
-	}
-
-	return TRUE;
-}
-
-std::vector<HWND> getToplevelWindows()
-{
-	EnumWindowsCallbackArgs args(::GetCurrentProcessId());
-	if (::EnumWindows(&EnumWindowsCallback, (LPARAM)&args) == FALSE) {
-		// XXX Log error here
-		return std::vector<HWND>();
-	}
-	return args.handles;
-}
 
 template <typename T>
 void report_players(char const * name, T const & players)
