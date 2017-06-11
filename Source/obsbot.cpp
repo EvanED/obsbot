@@ -56,34 +56,10 @@ UnitType const army_types[] = {
 	UnitTypes::Protoss_Observer,
 };
 
-template <typename T>
-void report_players(char const * name, T const & players)
-{
-	bool first = true;
-	std::stringstream ss;
-	ss << name << ": ";
-	for (auto const & player : players) {
-		if (!first) {
-			ss << ", ";
-			first = false;
-		}
-		ss << player->getName();
-	}
-	Broodwar << ss.str() << "\n";
-}
-
 void ExampleAIModule::onStart()
 {
 	// Enable the UserInput flag, which allows us to control the bot and type messages.
 	Broodwar->enableFlag(Flag::UserInput);
-
-	report_players("Players", Broodwar->getPlayers());
-	report_players("Enemies", Broodwar->enemies());
-	report_players("Observers", Broodwar->observers());
-}
-
-void ExampleAIModule::onEnd(bool isWinner)
-{
 }
 
 struct UnitStats
@@ -267,52 +243,6 @@ void ExampleAIModule::onFrame()
 	if (Broodwar->isReplay() || Broodwar->isPaused() || !Broodwar->self())
 		return;
 
-	// Prevent spamming by only running our onFrame once every number of latency frames.
-	// Latency frames are the number of frames before commands are processed.
-	//if (Broodwar->getFrameCount() % Broodwar->getLatencyFrames() != 0)
-	//	return;
-#if 0
-	Broodwar->setScreenPosition(
-		640 - Broodwar->getFrameCount() % (Broodwar->mapWidth() * BWAPI::TILEPOSITION_SCALE - 640),
-		Broodwar->getFrameCount() % (Broodwar->mapHeight() * BWAPI::TILEPOSITION_SCALE - 480)
-	);
-
-	std::vector<HWND> wnds = getToplevelWindows();
-	RECT rect;
-	bool found_window = false;
-	std::stringstream ss;
-	for (auto wnd : wnds) {
-		RECT rect2;
-		BOOL ret = GetWindowRect(wnds[0], &rect2);
-		if (!ret) {
-			Broodwar->drawTextScreen(100, 100, "Could not get rect");
-			return;
-		}
-		ss << "[" << rect2.left << "-" << rect2.right << ", " << rect2.top << "-" << rect2.bottom << "], ";
-		if (found_window && (rect.left != rect2.left || rect.top != rect2.top)) {
-			ss << " vs [" << rect.left << ", " << rect.top << "]";
-			Broodwar->drawTextScreen(100, 100, "Multiple windows with different top/lefts: %s",
-				ss.str().c_str());
-			return;
-		}
-		rect = rect2;
-		found_window = true;
-	}
-	if (!found_window) {
-		Broodwar->drawTextScreen(100, 100, "Could not find window dims");
-		return;
-	}
-
-	INPUT buffer;
-	MouseSetup(&buffer);
-	MouseMoveAbsolute(&buffer,
-		rect.left + Broodwar->getFrameCount() % 640,
-		rect.top + Broodwar->getFrameCount() % 480);
-#endif
-
-	//Broodwar->drawTextScreen(100, 100, "Inceceptor destroy score: %d",
-	//	UnitTypes::Terran_Marine.destroyScore());
-
 	std::vector<UnitStats> unit_stats(Broodwar->getPlayers().size());
 
 	for (auto &u : Broodwar->getAllUnits())
@@ -374,7 +304,6 @@ void ExampleAIModule::onFrame()
 	const int sq_size = top_box_height - 2*topline;
 	const int width_per_char = 5;
 
-	//Broodwar->setTextSize(Text::Size::Large);
 	Broodwar->drawBoxScreen(0, 0, SCREEN_WIDTH, top_box_height, Colors::Black, true);
 
 	int next_x = 10;
@@ -389,19 +318,16 @@ void ExampleAIModule::onFrame()
 		next_x += width_per_char * player->getName().size() + sq_size;
 
 		draw_bitmap(next_x, topline, minerals_image);
-		//Broodwar->drawBoxScreen(next_x, topline, next_x + sq_size, topline + sq_size, Colors::Blue, true);
 		next_x += sq_size + sq_size / 2;
 		Broodwar->drawTextScreen(next_x, topline, "%d", player->gatheredMinerals() - player->spentMinerals());
 		next_x += width_per_char * 4 + sq_size / 2;
 
 		draw_bitmap(next_x, topline, gas_image);
-		//Broodwar->drawBoxScreen(next_x, topline, next_x + sq_size, topline + sq_size, Colors::Green, true);
 		next_x += sq_size + sq_size / 2;
 		Broodwar->drawTextScreen(next_x, topline, "%d", player->gatheredGas() - player->spentGas());
 		next_x += width_per_char * 4 + sq_size / 2;
 
 		draw_bitmap(next_x, topline, food_image);
-		//Broodwar->drawBoxScreen(next_x, topline, next_x + sq_size, topline + sq_size, Colors::White, true);
 		next_x += sq_size + sq_size / 2;
 		Broodwar->drawTextScreen(next_x, topline, "%d/%d", player->supplyUsed() / 2, player->supplyTotal() / 2);
 		next_x += width_per_char * 6 + sq_size / 2;
@@ -409,149 +335,13 @@ void ExampleAIModule::onFrame()
 		Broodwar->drawBoxScreen(first_x-5, top_box_height-2, next_x - sq_size / 2, top_box_height, player->getColor(), true);
 
 		next_x += sq_size * 3;
-#if 0
-		Broodwar->drawTextScreen(
-			next_x, topline, "%s  %d workers, %f/%f food",
-			player->getName().c_str(),
-			unit_stats[player->getID()].n_workers,
-			unit_stats[player->getID()].used_food / 2.0,
-			unit_stats[player->getID()].available_food / 2.0);
-
-		Broodwar->drawTextScreen(
-			10, next_y,
-			"allUnitCount = %d, completedUnitCount = %d, deadUnitCount = %d\n"
-			"gas=%d, gatheredGas=%d, gatheredMinerals=%d, minerals=%d\n"
-			"refunded gas=%d, refunded minerals=%d, repaired gas=%d, repaired minerals=%d\n"
-			"spent gas=%d, spent minerals=%d\n"
-			"building score=%d, kill score=%d, unit score=%d\n"
-			"incomplete unit count=%d, killed unit count=%d\n"
-			"supply total=%f/%f/%f, supply used=%f/%f/%f",
-			player->allUnitCount(),
-			player->completedUnitCount(),
-			player->deadUnitCount(),
-			player->gas(),
-			player->gatheredGas(),
-			player->gatheredMinerals(),
-			player->minerals(),
-			player->refundedGas(),
-			player->refundedMinerals(),
-			player->repairedGas(),
-			player->repairedMinerals(),
-			player->spentGas(),
-			player->spentMinerals(),
-			player->getBuildingScore(),
-			player->getKillScore(),
-			player->getUnitScore(),
-			player->incompleteUnitCount(),
-			player->killedUnitCount(),
-			player->supplyTotal(Races::Terran) /2.0,
-			player->supplyTotal(Races::Zerg) /2.0,
-			player->supplyTotal(Races::Protoss) /2.0,
-			player->supplyUsed(Races::Terran) /2.0,
-			player->supplyUsed(Races::Zerg) /2.0,
-			player->supplyUsed(Races::Protoss) /2.0
-			);
-
-		next_x += 200;
-		next_y += 150;
-#endif
 	}
 
 	draw_workers();
+}
 
-#if 0
-		// Finally make the unit do some stuff!
-
-		// If the unit is a worker unit
-		if (u->getType().isWorker())
-		{
-			// if our worker is idle
-			if (u->isIdle())
-			{
-				// Order workers carrying a resource to return them to the center,
-				// otherwise find a mineral patch to harvest.
-				if (u->isCarryingGas() || u->isCarryingMinerals())
-				{
-					u->returnCargo();
-				}
-				else if (!u->getPowerUp())  // The worker cannot harvest anything if it
-				{                             // is carrying a powerup such as a flag
-											  // Harvest from the nearest mineral patch or gas refinery
-					if (!u->gather(u->getClosestUnit(IsMineralField || IsRefinery)))
-					{
-						// If the call fails, then print the last error message
-						Broodwar << Broodwar->getLastError() << std::endl;
-					}
-
-				} // closure: has no powerup
-			} // closure: if idle
-
-		}
-		else if (u->getType().isResourceDepot()) // A resource depot is a Command Center, Nexus, or Hatchery
-		{
-
-			// Order the depot to construct more workers! But only when it is idle.
-			if (u->isIdle() && !u->train(u->getType().getRace().getWorker()))
-			{
-				// If that fails, draw the error at the location so that you can visibly see what went wrong!
-				// However, drawing the error once will only appear for a single frame
-				// so create an event that keeps it on the screen for some frames
-				Position pos = u->getPosition();
-				Error lastErr = Broodwar->getLastError();
-				Broodwar->registerEvent([pos, lastErr](Game*) { Broodwar->drawTextMap(pos, "%c%s", Text::White, lastErr.c_str()); },   // action
-					nullptr,    // condition
-					Broodwar->getLatencyFrames());  // frames to run
-
-													// Retrieve the supply provider type in the case that we have run out of supplies
-				UnitType supplyProviderType = u->getType().getRace().getSupplyProvider();
-				static int lastChecked = 0;
-
-				// If we are supply blocked and haven't tried constructing more recently
-				if (lastErr == Errors::Insufficient_Supply &&
-					lastChecked + 400 < Broodwar->getFrameCount() &&
-					Broodwar->self()->incompleteUnitCount(supplyProviderType) == 0)
-				{
-					lastChecked = Broodwar->getFrameCount();
-
-					// Retrieve a unit that is capable of constructing the supply needed
-					Unit supplyBuilder = u->getClosestUnit(GetType == supplyProviderType.whatBuilds().first &&
-						(IsIdle || IsGatheringMinerals) &&
-						IsOwned);
-					// If a unit was found
-					if (supplyBuilder)
-					{
-						if (supplyProviderType.isBuilding())
-						{
-							TilePosition targetBuildLocation = Broodwar->getBuildLocation(supplyProviderType, supplyBuilder->getTilePosition());
-							if (targetBuildLocation)
-							{
-								// Register an event that draws the target build location
-								Broodwar->registerEvent([targetBuildLocation, supplyProviderType](Game*)
-								{
-									Broodwar->drawBoxMap(Position(targetBuildLocation),
-										Position(targetBuildLocation + supplyProviderType.tileSize()),
-										Colors::Blue);
-								},
-									nullptr,  // condition
-									supplyProviderType.buildTime() + 100);  // frames to run
-
-																			// Order the builder to construct the supply structure
-								supplyBuilder->build(supplyProviderType, targetBuildLocation);
-							}
-						}
-						else
-						{
-							// Train the supply provider (Overlord) if the provider is not a structure
-							supplyBuilder->train(supplyProviderType);
-						}
-					} // closure: supplyBuilder is valid
-				} // closure: insufficient supply
-			} // closure: failed to train idle unit
-
-		}
-
-	} // closure: unit iterator
-#endif
+void ExampleAIModule::onEnd(bool did_i_win)
+{
 }
 
 void ExampleAIModule::onSendText(std::string text)
