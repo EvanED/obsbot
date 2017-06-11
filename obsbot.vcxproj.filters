@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Source\bitmaps.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Dll.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\obsbot.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\util\mouse.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\bitmaps.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\util\enumerate.hpp">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\obsbot.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{cf0ff9b3-9688-4a39-b46d-f8145f753d8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{09061a9b-93da-4e21-93ea-f52f3cc5aa36}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

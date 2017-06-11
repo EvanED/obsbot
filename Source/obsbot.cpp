@@ -3,6 +3,7 @@
 #include <sstream>
 #include <cassert>
 
+#include "util/enumerate.hpp"
 #include "bitmaps.hpp"
 
 //#include "P:\programs\bwapi-master\bwapi\BWAPI\Source\BWAPI\UnitImpl.h"

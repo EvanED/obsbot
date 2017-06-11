@@ -95,12 +95,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\bitmaps.cpp" />
     <ClCompile Include="Source\Dll.cpp" />
     <ClCompile Include="Source\obsbot.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="colors.hpp" />
+    <ClInclude Include="Source\bitmaps.hpp" />
     <ClInclude Include="Source\obsbot.hpp" />
+    <ClInclude Include="Source\util\enumerate.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
