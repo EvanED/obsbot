@@ -97,14 +97,19 @@
   <ItemGroup>
     <ClCompile Include="Source\Dll.cpp" />
     <ClCompile Include="Source\obsbot.cpp" />
+    <ClCompile Include="Source\PlayerStats.cpp" />
+    <ClCompile Include="Source\sc_util\UnitInfo.cpp" />
     <ClCompile Include="Source\ui\bitmaps.cpp" />
     <ClCompile Include="Source\ui\unit_ui.cpp" />
     <ClCompile Include="Source\util\mouse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\obsbot.hpp" />
+    <ClInclude Include="Source\PlayerStats.hpp" />
+    <ClInclude Include="Source\sc_util\UnitInfo.hpp" />
     <ClInclude Include="Source\ui\bitmaps.hpp" />
     <ClInclude Include="Source\ui\ui.hpp" />
+    <ClInclude Include="Source\util\container_algorithms.hpp" />
     <ClInclude Include="Source\util\enumerate.hpp" />
     <ClInclude Include="Source\util\fixed_circular_buffer.hpp" />
   </ItemGroup>

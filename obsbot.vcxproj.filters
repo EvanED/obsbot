@@ -16,6 +16,12 @@
     <ClCompile Include="Source\ui\bitmaps.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\sc_util\UnitInfo.cpp">
+      <Filter>SC Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerStats.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\util\enumerate.hpp">
@@ -33,6 +39,15 @@
     <ClInclude Include="Source\ui\bitmaps.hpp">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\sc_util\UnitInfo.hpp">
+      <Filter>SC Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\util\container_algorithms.hpp">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerStats.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -43,6 +58,9 @@
     </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{a32314eb-e361-45df-a1e9-1f56b44a4090}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SC Util">
+      <UniqueIdentifier>{319aee95-e189-43a0-b0c2-cc2ed3aae19f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
