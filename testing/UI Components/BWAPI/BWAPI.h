@@ -23,6 +23,10 @@ namespace BWAPI
 		std::string const & getName() const {
 			return name;
 		}
+
+		int supplyUsed() const {
+			return 5;
+		}
 	};
 
 	extern std::unique_ptr<Game> Broodwar;

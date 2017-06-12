@@ -67,7 +67,7 @@ void draw_workers()
 		players.push_back(player);
 	}
 
-	build_economy_tab(players)->draw(Position(box_left, box_top));
+	build_economy_tab(players)(Position(box_left, box_top));
 }
 
 void ExampleAIModule::onFrame()
