@@ -51,3 +51,10 @@ bool is_army(UnitType t)
 {
 	return algo::contains(army_types, t);
 }
+
+int get_worker_count(Player p)
+{
+	return p->allUnitCount(UnitTypes::Terran_SCV)
+		+ p->allUnitCount(UnitTypes::Protoss_Probe)
+		+ p->allUnitCount(UnitTypes::Zerg_Drone);
+}

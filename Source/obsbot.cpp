@@ -6,6 +6,7 @@
 #include "util/enumerate.hpp"
 #include "ui/ui.hpp"
 #include "ui/bitmaps.hpp"
+#include "ui/components.hpp"
 #include "sc_util/UnitInfo.hpp"
 #include "PlayerStats.hpp"
 
@@ -56,33 +57,17 @@ std::unordered_map<Unit, UnitClientInfo> client_infos;
 
 void draw_workers()
 {
-	const int width_per_char = 5;
-	const int height_per_line = 20;
-
 	const int box_top = 40;
 	const int box_left = 30;
-	const int box_right = box_left + 26 * width_per_char;
-	const int box_bottom = box_top + 3 * height_per_line;
 
-	Broodwar->drawBoxScreen(box_left, box_top, box_right, box_bottom, Colors::Grey, true);
-	Broodwar->drawTextScreen(box_left + 5, box_top, "Economy:");
-
-	int next_y = height_per_line;
+	std::vector<Player> players;
 	for (auto const & player : Broodwar->getPlayers()) {
 		if (player->isObserver() || player->isNeutral())
 			continue;
-
-		Broodwar->drawTextScreen(box_left + width_per_char, box_top + next_y,
-			"Workers: %d  Lost: %d",
-			player->allUnitCount(UnitTypes::Terran_SCV)
-			+ player->allUnitCount(UnitTypes::Protoss_Probe)
-			+ player->allUnitCount(UnitTypes::Zerg_Drone),
-			player->deadUnitCount(UnitTypes::Terran_SCV)
-			+ player->deadUnitCount(UnitTypes::Protoss_Probe)
-			+ player->deadUnitCount(UnitTypes::Zerg_Drone));
-
-		next_y += height_per_line;
+		players.push_back(player);
 	}
+
+	build_economy_tab(players)->draw(Position(box_left, box_top));
 }
 
 void ExampleAIModule::onFrame()

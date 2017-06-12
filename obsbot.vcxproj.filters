@@ -22,6 +22,9 @@
     <ClCompile Include="Source\PlayerStats.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ui\components.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\util\enumerate.hpp">
@@ -47,6 +50,9 @@
     </ClInclude>
     <ClInclude Include="Source\PlayerStats.hpp">
       <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ui\components.hpp">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

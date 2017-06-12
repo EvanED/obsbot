@@ -69,7 +69,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Disabled</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>../include;C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt;P:\programs\bwapi-master\bwapi\Util\Source\;P:\programs\BWAPI\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NOMINMAX;WIN32;NDEBUG;_WINDOWS;_USRDLL;OBSBOT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -100,6 +100,7 @@
     <ClCompile Include="Source\PlayerStats.cpp" />
     <ClCompile Include="Source\sc_util\UnitInfo.cpp" />
     <ClCompile Include="Source\ui\bitmaps.cpp" />
+    <ClCompile Include="Source\ui\components.cpp" />
     <ClCompile Include="Source\ui\unit_ui.cpp" />
     <ClCompile Include="Source\util\mouse.cpp" />
   </ItemGroup>
@@ -108,6 +109,7 @@
     <ClInclude Include="Source\PlayerStats.hpp" />
     <ClInclude Include="Source\sc_util\UnitInfo.hpp" />
     <ClInclude Include="Source\ui\bitmaps.hpp" />
+    <ClInclude Include="Source\ui\components.hpp" />
     <ClInclude Include="Source\ui\ui.hpp" />
     <ClInclude Include="Source\util\container_algorithms.hpp" />
     <ClInclude Include="Source\util\enumerate.hpp" />

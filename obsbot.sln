@@ -5,16 +5,33 @@ VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "observer", "obsbot.vcxproj", "{2E63AE74-758A-4607-9DE4-D28E814A6E13}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UI Components", "testing\UI Components\UI Components.vcxproj", "{19D1F756-42B0-4A8A-9876-2B09DDDEC4A4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2E63AE74-758A-4607-9DE4-D28E814A6E13} = {2E63AE74-758A-4607-9DE4-D28E814A6E13}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E63AE74-758A-4607-9DE4-D28E814A6E13}.Debug|x64.ActiveCfg = Debug|Win32
 		{2E63AE74-758A-4607-9DE4-D28E814A6E13}.Debug|x86.ActiveCfg = Debug|Win32
 		{2E63AE74-758A-4607-9DE4-D28E814A6E13}.Debug|x86.Build.0 = Debug|Win32
+		{2E63AE74-758A-4607-9DE4-D28E814A6E13}.Release|x64.ActiveCfg = Release|Win32
 		{2E63AE74-758A-4607-9DE4-D28E814A6E13}.Release|x86.ActiveCfg = Release|Win32
 		{2E63AE74-758A-4607-9DE4-D28E814A6E13}.Release|x86.Build.0 = Release|Win32
+		{19D1F756-42B0-4A8A-9876-2B09DDDEC4A4}.Debug|x64.ActiveCfg = Debug|x64
+		{19D1F756-42B0-4A8A-9876-2B09DDDEC4A4}.Debug|x64.Build.0 = Debug|x64
+		{19D1F756-42B0-4A8A-9876-2B09DDDEC4A4}.Debug|x86.ActiveCfg = Debug|Win32
+		{19D1F756-42B0-4A8A-9876-2B09DDDEC4A4}.Debug|x86.Build.0 = Debug|Win32
+		{19D1F756-42B0-4A8A-9876-2B09DDDEC4A4}.Release|x64.ActiveCfg = Release|x64
+		{19D1F756-42B0-4A8A-9876-2B09DDDEC4A4}.Release|x64.Build.0 = Release|x64
+		{19D1F756-42B0-4A8A-9876-2B09DDDEC4A4}.Release|x86.ActiveCfg = Release|Win32
+		{19D1F756-42B0-4A8A-9876-2B09DDDEC4A4}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
