@@ -10,7 +10,10 @@
 #include "sc_util/UnitInfo.hpp"
 #include "PlayerStats.hpp"
 
-//#include "P:\programs\bwapi-master\bwapi\BWAPI\Source\BWAPI\UnitImpl.h"
+#include "BWAPI\UnitImpl.h"
+#include "BW\CUnit.h"
+#include "BW\CSprite.h"
+#include "BW\CImage.h"
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
@@ -70,6 +73,46 @@ void draw_workers()
 	build_economy_tab(players)(Position(box_left, box_top));
 }
 
+void __fastcall null_render(int, int, BW::grpFrame*, rect*, int)
+{
+}
+
+// Also may need to comment out line in BW/CImage.cpp, CImage::draw_image
+// that calls render_function. I'm not sure why.
+void patch_out_renderer(BW::CSprite * sprite)
+{
+	BW::CImage
+		*head = sprite->pImageHead,
+		*tail = sprite->pImageTail;
+
+	while (head != tail) {
+		head->renderFunction = null_render;
+		head = head->next;
+	}
+	if (head != NULL)
+		head->renderFunction = null_render;
+
+}
+
+void patch_out_renderer(Unit u)
+{
+	BWAPI::UnitImpl * pd = dynamic_cast<BWAPI::UnitImpl*>(u);
+	assert(pd);
+	BW::CSprite
+		*starting_img = pd->getOriginalRawData->sprite,
+		*head = starting_img;
+
+	while (head->prev != NULL && head->prev != starting_img) {
+		head = head->prev;
+	}
+
+	while (head->next != NULL && head->next != starting_img) {
+		patch_out_renderer(head);
+		head = head->next;
+	}
+	patch_out_renderer(starting_img);
+}
+
 void ExampleAIModule::onFrame()
 {
 	// Called once every game frame
@@ -87,11 +130,13 @@ void ExampleAIModule::onFrame()
 		if (!u->exists())
 			continue;
 
-		// Ignore the unit if it is incomplete or busy constructing
-		if (!u->isCompleted() || u->isConstructing())
-			continue;
+		patch_out_renderer(u);
 
 		if (u->getPlayer()->isNeutral())
+			continue;
+
+		// Ignore the unit if it is incomplete or busy constructing
+		if (!u->isCompleted() || u->isConstructing())
 			continue;
 
 		draw_health_bar(u);
